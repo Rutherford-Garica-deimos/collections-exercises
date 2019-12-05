@@ -23,6 +23,13 @@ public class Student {
         grades.add(grade);
     }
 
+    public int[] getAllGrades(){
+        int[] newArray = new int[grades.size()];
+        for (int i= 0 ; i< newArray.length;i++){
+            newArray[i] = grades.indexOf(i);
+        }
+        return newArray;
+    }
 
     ;
 
