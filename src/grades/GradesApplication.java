@@ -1,7 +1,11 @@
 package grades;
 
 import java.util.HashMap;
+
+import java.util.Set;
+
 import java.util.Scanner;
+
 
 
 public class GradesApplication {
@@ -9,9 +13,28 @@ public class GradesApplication {
     public static HashMap<String, Student> students = new HashMap<>();
     public static Scanner scan = new Scanner(System.in);
 
-//    public static int getGrade(String name) {
-//        for (Student student : students) {
-//
+    public static String[] getNames() { // get student names
+        String[] studentNamesArr = new String[students.size()];
+        return students.keySet().toArray(studentNamesArr);
+    }
+
+//        TODO: UNCOMMENT BELOW
+//    public static void displayStudentGrades(String[] studentNames) {
+//        for (String name : studentNames) { // iterates through array and prints each element
+//            System.out.printf("Student: %s", name);
+//            System.out.println("Grades:");
+//            for (int grade : students.get(name).getAllGrades()) {
+//                System.out.printf("- %d%n", grade);
+//            }
+//        }
+//    }
+
+    //        TODO: UNCOMMENT BELOW
+//    public static void displayStudentInfo(String[] studentsNames) {
+//        for (String name : studentsNames) {
+//            displayStudentGrades(studentsNames);
+//            System.out.printf("GPA: %f", students.get(name).getGradeAverage());
+//            System.out.println("---------------");
 //        }
 //    }
 
@@ -44,34 +67,12 @@ public class GradesApplication {
         students.put("littleDavid", david);
 
 //        System.out.println(students);
-//        Welcome!
-//
-//Here are the GitHub usernames of our students:
-//
-//|zgulde| |ryanorsinger| |jreich5| |fmendozaro| |MontealegreLuis|
-//
-//What student would you like to see more information on?
-//
-//> pizza
-//
-//Sorry, no student found with the GitHub username of "pizza".
-//
-//Would you like to see another student?
-//
-//> y
-//
-//What student would you like to see more information on?
-//
-//> zgulde
-//
-//Name: Zach - GitHub Username: zgulde
-//Current Average: 87.4
-//
-//Would you like to see another student?
-//
-//> no
-//
-//Goodbye, and have a wonderful day!
+
+//        getNames();
+//        displayStudentInfo(getNames());
+//        TODO: UNCOMMENT BELOW
+//        displayStudentGrades(getNames());
+//        displayStudentInfo(getNames());
 
         System.out.println("Welcome!\n");
         Boolean continueLoop = true;
@@ -106,5 +107,6 @@ public class GradesApplication {
         }else {
             System.out.printf("%nSorry, no student found with the GitHub username of \"%s\".%n%n",studentId);
         }
+
     }
 }
