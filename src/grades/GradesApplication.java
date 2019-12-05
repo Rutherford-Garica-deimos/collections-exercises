@@ -1,15 +1,35 @@
 package grades;
 
 import java.util.HashMap;
+import java.util.Set;
 
 
 public class GradesApplication {
 
     public static HashMap<String, Student> students = new HashMap<>();
 
-//    public static int getGrade(String name) {
-//        for (Student student : students) {
-//
+    public static String[] getNames() { // get student names
+        String[] studentNamesArr = new String[students.size()];
+        return students.keySet().toArray(studentNamesArr);
+    }
+
+//        TODO: UNCOMMENT BELOW
+//    public static void displayStudentGrades(String[] studentNames) {
+//        for (String name : studentNames) { // iterates through array and prints each element
+//            System.out.printf("Student: %s", name);
+//            System.out.println("Grades:");
+//            for (int grade : students.get(name).getAllGrades()) {
+//                System.out.printf("- %d%n", grade);
+//            }
+//        }
+//    }
+
+    //        TODO: UNCOMMENT BELOW
+//    public static void displayStudentInfo(String[] studentsNames) {
+//        for (String name : studentsNames) {
+//            displayStudentGrades(studentsNames);
+//            System.out.printf("GPA: %f", students.get(name).getGradeAverage());
+//            System.out.println("---------------");
 //        }
 //    }
 
@@ -41,6 +61,11 @@ public class GradesApplication {
         students.put("bigPhil", phil);
         students.put("littleDavid", david);
 
-        System.out.println(students);
+//        System.out.println(students);
+//        getNames();
+//        displayStudentInfo(getNames());
+//        TODO: UNCOMMENT BELOW
+//        displayStudentGrades(getNames());
+//        displayStudentInfo(getNames());
     }
 }
