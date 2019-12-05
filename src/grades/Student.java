@@ -23,6 +23,7 @@ public class Student {
         grades.add(grade);
     }
 
+
     ;
 
     // returns the average of the students grades
