@@ -26,7 +26,7 @@ public class Student {
     public int[] getAllGrades(){
         int[] newArray = new int[grades.size()];
         for (int i= 0 ; i< newArray.length;i++){
-            newArray[i] = grades.indexOf(i);
+            newArray[i] = grades.get(i);
         }
         return newArray;
     }

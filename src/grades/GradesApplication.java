@@ -19,24 +19,25 @@ public class GradesApplication {
     }
 
 //        TODO: UNCOMMENT BELOW
-//    public static void displayStudentGrades(String[] studentNames) {
-//        for (String name : studentNames) { // iterates through array and prints each element
-//            System.out.printf("Student: %s", name);
-//            System.out.println("Grades:");
-//            for (int grade : students.get(name).getAllGrades()) {
-//                System.out.printf("- %d%n", grade);
-//            }
-//        }
-//    }
+    public static void displayStudentGrades(String[] studentNames) {
+        for (String name : studentNames) { // iterates through array and prints each element
+            System.out.printf("Student: %s", name);
+            System.out.println("Grades:");
+            int[] what = students.get(name).getAllGrades();
+            for (int grade : students.get(name).getAllGrades()) {
+                System.out.printf("- %d%n", grade);
+            }
+        }
+    }
 
     //        TODO: UNCOMMENT BELOW
-//    public static void displayStudentInfo(String[] studentsNames) {
-//        for (String name : studentsNames) {
-//            displayStudentGrades(studentsNames);
-//            System.out.printf("GPA: %f", students.get(name).getGradeAverage());
-//            System.out.println("---------------");
-//        }
-//    }
+    public static void displayStudentInfo(String[] studentsNames) {
+        for (String name : studentsNames) {
+            displayStudentGrades(studentsNames);
+            System.out.printf("GPA: %f", students.get(name).getGradeAverage());
+            System.out.println("---------------");
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -71,8 +72,8 @@ public class GradesApplication {
 //        getNames();
 //        displayStudentInfo(getNames());
 //        TODO: UNCOMMENT BELOW
-//        displayStudentGrades(getNames());
-//        displayStudentInfo(getNames());
+        displayStudentGrades(getNames());
+        displayStudentInfo(getNames());
 
         System.out.println("Welcome!\n");
         Boolean continueLoop = true;
