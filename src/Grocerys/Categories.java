@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Categories {
+class Categories {
     private String category;
     private ArrayList<Items> catList = new ArrayList<>();
 
@@ -33,8 +33,8 @@ public class Categories {
     }
 
     public void printItems(){
-        for (int i = 0; i <catList.size(); i++){
-            System.out.printf("Item - %s --- Number: %s%n",catList.get(i).getName(),catList.get(i).getNumber());
+        for (Items items : catList) {
+            System.out.printf("Item - %s --- Number: %s%n", items.getName(), items.getNumber());
         }
         System.out.println();
     }
