@@ -1,6 +1,7 @@
 package grades;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,47 +37,39 @@ public class Student {
     // returns the average of the students grades
     public double getGradeAverage() {
         double average = 0;
-        for (int grade : this.grades) {
+        for (int grade : grades) {
             average += grade;
         }
         average = average / grades.size();
         return average;
     }
 
-    /*
-        Create an instance method on your Student class to calculate a student's attendance percentage -- (Total Days - Absences) / Total Days.
-     */
-    public void addAttendanceLog(String date, String status) {
-        attendance.put(date, status);
-    }
-
-    public HashMap<String, String> studentAttendanceRecord() {
+    public HashMap<String, String> getAttendance() {
         return attendance;
     }
 
-    public int attendancePercentage() {
-        if (attendance.isEmpty()) {
-            return 0;
-        } else {
-            return ((attendance.size() - totalAbsents().size()) / attendance.size());
-        }
+    public void setAttendance(String date, String status) {
+        attendance.put(date, status);
     }
 
-    public ArrayList<Map.Entry<String, String>> totalAbsents() {
-        ArrayList<Map.Entry<String, String>> absents = new ArrayList<>();
+    public HashMap<String, String> getAbsences() {
+        HashMap<String, String> absences = new HashMap<>();
         for (Map.Entry<String, String> entry : attendance.entrySet()) {
             if (entry.getValue().equalsIgnoreCase("a")) {
-                absents.add(entry);
+                absences.put(entry.getKey(), entry.getValue());
             }
         }
-        return absents;
+        return absences;
+    }
+
+    public int getAttendancePercentage() {
+        float totalDays = attendance.size();
+        float totalAbsences = getAbsences().size();
+        return (int) (((totalDays - totalAbsences) / totalDays) * 100);
     }
 
     public static void main(String[] args) {
         Student student1 = new Student("Bob");
-        student1.addGrade(84);
-        student1.addGrade(76);
-        student1.addGrade(89);
-        System.out.println(student1.getGradeAverage());
+
     }
 }
