@@ -1,7 +1,7 @@
 package grades;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.Scanner;
 
 import util.Input;
@@ -16,7 +16,7 @@ public class GradesApplication {
 
     public static void splash() {
         System.out.println("Here are the GitHub user names of our students:");
-        students.forEach((key, value) -> System.out.printf("| %s | ", key));
+        students.forEach((key, value) -> System.out.printf("|%s| ", key));
         System.out.printf("%n%n");
     }
 
@@ -25,11 +25,15 @@ public class GradesApplication {
         System.out.printf("0 - exit%n");
         System.out.printf("1 - student search%n");
         System.out.printf("2 - student search (detailed)%n");
-        System.out.printf("3 - view all students%n");
+        System.out.printf("3 - log student attendance%n");
+        System.out.printf("4 - view student attendance %%%n");
+        System.out.printf("5 - view student report%n");
+        System.out.printf("6 - view all students%n");
+        System.out.printf("7 - view class average%n");
     }
 
     public static int selectOption() {
-        return input.getInt(0, 3);
+        return input.getInt(0, 7);
     }
 
     public static void userSelection(int option) {
@@ -38,13 +42,27 @@ public class GradesApplication {
                 continueLoop = false;
                 break;
             case 1:
-                studentSearch();
+                runStudentSearch();
                 break;
             case 2:
-                studentSearchDetailed();
+                runStudentSearchDetailed();
                 break;
             case 3:
-                displayAllStudents(getNames());
+                runStudentAddAttendance();
+                break;
+            case 4:
+                runStudentAttendance();
+            case 5:
+                runStudentReport();
+                break;
+            case 6:
+                runEntireClass();
+                break;
+            case 7:
+                runClassAvg();
+                break;
+            default:
+                System.out.println("Hi! Don't know how you got here :)");
                 confirm();
                 break;
         }
@@ -62,7 +80,7 @@ public class GradesApplication {
     }
 
     public static void displayStudent(String studentName) {
-        System.out.printf("Name %s -  GitHub Username: %s%nGrades:%n", students.get(studentName).getName(), studentName);
+        System.out.printf("Name %s - GitHub User name: %s%nGrades:%n", students.get(studentName).getName(), studentName);
         displayGrades(studentName);
     }
 
@@ -73,20 +91,7 @@ public class GradesApplication {
     }
 
     public static void displayAverage(String studentName) {
-        System.out.printf("GPA: %f.2", students.get(studentName).getGradeAverage());
-    }
-
-    public static void studentSearch() { // displays student w/all grades
-        String student = studentSearchInput();
-        displayStudent(student);
-        confirm();
-    }
-
-    public static void studentSearchDetailed() { // displays student w/all grades & avg.
-        String student = studentSearchInput();
-        displayStudent(student);
-        displayAverage(student);
-        confirm();
+        System.out.printf("GPA: %.1f%n", students.get(studentName).getGradeAverage());
     }
 
     public static String[] getNames() { // get all student names
@@ -96,7 +101,7 @@ public class GradesApplication {
 
     public static void displayAllStudents(String[] studentNames) { // displays all students details
         for (String name : studentNames) { // iterates through array and prints each element
-            System.out.printf("Student: %s", name);
+            System.out.printf("Student: %s%n", name);
             System.out.println("Grades:");
             displayGrades(name);
             displayAverage(name);
@@ -104,6 +109,117 @@ public class GradesApplication {
         }
     }
 
+    // ===== display student w/grades =====
+    public static void runStudentSearch() { // displays student w/all grades
+        String student = studentSearchInput();
+        displayStudent(student);
+        confirm();
+    }
+
+    // ===== display student w/grades & average
+    public static void runStudentSearchDetailed() { // displays student w/all grades & avg.
+        String student = studentSearchInput();
+        displayStudent(student);
+        displayAverage(student);
+        confirm();
+    }
+
+    // ===== All student's grades =====
+    public static void runEntireClass() {
+        displayAllStudents(getNames());
+        confirm();
+    }
+
+    // ===== class average =====
+    public static ArrayList<Integer> classGrades() { // returns an arrayList w/entire class grades
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (String name : getNames()) { // for each student
+            for (int grade : students.get(name).getAllGrades()) { // add students grades to the ArrayList
+                arr.add(grade);
+            }
+        }
+        return arr;
+    }
+
+    public static void displayClassAvg(ArrayList<Integer> classGrades) {
+        float sum = 0;
+        for (int grade : classGrades) {
+            sum += grade;
+        }
+//        System.out.println(sum); // TODO: uncomment to display sum
+//        System.out.println(classGrades.size()); // TODO: uncomment to display size
+        System.out.printf("Class Average: %.1f%n", (sum / classGrades.size()));
+    }
+
+    public static void runClassAvg() {
+        displayClassAvg(classGrades());
+        confirm();
+    }
+
+    // ===== csv report =====
+    public static void studentReport() {
+        for (String name : getNames()) {
+            System.out.printf("%s,%s,%.1f%n", name, students.get(name).getName(), students.get(name).getGradeAverage());
+        }
+        System.out.println();
+    }
+
+    public static void runStudentReport() {
+        System.out.printf("%nname,github_username,average%n");
+        studentReport();
+        confirm();
+    }
+
+    // ====== display student percentage ======
+    public static void displayStudentAttendance() {
+        String student = studentSearchInput();
+        if (students.get(student).attendancePercentage() == 0) {
+            System.out.printf("Empty log list. Student - %s%n", students.get(student).getName());
+        } else {
+            System.out.printf("Attendance %%: %d - %s%n", students.get(student).attendancePercentage(), students.get(student).getName());
+        }
+    }
+
+    public static void runStudentAttendance() {
+        splash();
+        displayStudentAttendance();
+        confirm();
+    }
+
+    // ===== log student attendance =====
+    public static boolean recordAttendance(String date, String value, String studentName) {
+        switch (value.toLowerCase()) {
+            case "a":
+            case "absent":
+            case "p":
+            case "present":
+                students.get(studentName).addAttendanceLog(date, value.toLowerCase());
+                return true;
+            default:
+                System.out.println("Attendance indicator not valid!");
+                return false;
+        }
+    }
+
+    public static void addStudentAttendance() {
+        String student = studentSearchInput();
+        System.out.println("Log student's attendance:");
+        String date = input.getString("Date: (YYYY/MM/DD)"); // check
+        String attendance = input.getString("Attendance: (P)-present/ (A)-absent");
+        while (!recordAttendance(date, attendance, student)) {
+            attendance = input.getString("Attendance: (P) = present/ (A) = absent");
+        }
+        System.out.println(students.get(student).studentAttendanceRecord());
+        System.out.printf("Logged: %s : %s - %s%n", date, attendance.toUpperCase(), students.get(student).getName());
+    }
+
+    public static void runStudentAddAttendance() {
+        splash();
+        addStudentAttendance();
+        confirm();
+    }
+
+    // ===== continuation confirmation =====
     public static void confirm() { // confirmation to continue
         System.out.println("Would you like to perform another search?(yes/no)");
         String yesNo = scan.next();
@@ -123,31 +239,47 @@ public class GradesApplication {
 
     public static void main(String[] args) {
 
-        Student bob = new Student("Bob");
+        Student bob = new Student("Bob"); // create new Student objects
         Student jack = new Student("Jack");
         Student phil = new Student("Phil");
-        Student david = new Student("David");
+        Student bill = new Student("Bill");
 
-        bob.addGrade(89);
+        bob.addGrade(89); // add grades
         bob.addGrade(97);
         bob.addGrade(69);
+
+        bob.addAttendanceLog("2019/10/01", "a");
+        bob.addAttendanceLog("2019/10/02", "a");
+        bob.addAttendanceLog("2019/10/03", "a");
 
         jack.addGrade(99);
         jack.addGrade(96);
         jack.addGrade(89);
 
+        bob.addAttendanceLog("2019/10/04", "p");
+        bob.addAttendanceLog("2019/10/05", "p");
+        bob.addAttendanceLog("2019/10/06", "p");
+
         phil.addGrade(79);
         phil.addGrade(83);
         phil.addGrade(78);
 
-        david.addGrade(100);
-        david.addGrade(89);
-        david.addGrade(94);
+        bob.addAttendanceLog("2019/10/07", "a");
+        bob.addAttendanceLog("2019/10/08", "p");
+        bob.addAttendanceLog("2019/10/09", "a");
 
-        students.put("bigBob", bob);
+        bill.addGrade(100);
+        bill.addGrade(89);
+        bill.addGrade(94);
+
+        bob.addAttendanceLog("2019/10/10", "p");
+        bob.addAttendanceLog("2019/10/11", "a");
+        bob.addAttendanceLog("2019/10/12", "a");
+
+        students.put("bigBob", bob); // add to HashMap with ('user name','Student')
         students.put("bigJack", jack);
         students.put("bigPhil", phil);
-        students.put("littleDavid", david);
+        students.put("littleBill", bill);
 
         System.out.println("Welcome!");
 

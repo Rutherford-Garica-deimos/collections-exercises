@@ -7,7 +7,7 @@ public class Input {
     // scanner should be set to a new instance of the Scanner class.
     private Scanner scanner = new Scanner(System.in);
 
-    public void inputCleaner(){
+    public void inputCleaner() {
         scanner.nextLine();
     }
 
