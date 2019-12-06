@@ -3,11 +3,11 @@ package Grocerys;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Items {
-    protected String category;
+class Items {
+    private String category;
 //    private HashMap<String, Integer> listItem;
-    protected String name;
-    protected int number;
+    private String name;
+    private int number;
 //
 //    public Items(String category, String name, int number) {
 //        this.category = category;

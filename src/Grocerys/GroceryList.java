@@ -9,16 +9,16 @@ import java.util.HashMap;
 
 public class GroceryList {
 
-    public static Input input = new Input();
+    private static Input input = new Input();
 
 //    public static HashMap<Integer, Items> list = new HashMap<>();
-    public static HashMap<String,Categories> list = new HashMap<>();
+    private static HashMap<String,Categories> list = new HashMap<>();
 
     public static int listSize = 1;
 //    public static int[] listOrderCat;
 //    public static int[] listOrderName;
 
-    public static String[] categories = {"bathroom","fruits/veggies","kitchen supplies","meats"};
+    private static String[] categories = {"bathroom","fruits/veggies","kitchen supplies","meats"};
 
 
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class GroceryList {
 
     }
 
-    public static void groceryListApp() {
+    private static void groceryListApp() {
         //        System.out.println("Do you want to create a grocery list?(yes/no)");
         String yesNo = input.getString("Do you want to create a grocery list? (yes/no)");
         if (!yesNo.equalsIgnoreCase("no") && !yesNo.equalsIgnoreCase("n")) {
@@ -57,7 +57,7 @@ public class GroceryList {
         }
     }
 
-    public static void createList() {
+    private static void createList() {
         String addYesNo = input.getString("Do you want to add a item to the list?");
         if (addYesNo.equalsIgnoreCase("yes") || addYesNo.equalsIgnoreCase("y")) {
             System.out.println("Select a category:\n");
@@ -90,10 +90,10 @@ public class GroceryList {
         }
     }
 
-    public static void organizeList(){
-//        listOrderCat = new int[list.size()];
-//        listOrderName = new int[list.size()];
-
-    }
+//    public static void organizeList(){
+////        listOrderCat = new int[list.size()];
+////        listOrderName = new int[list.size()];
+//
+//    }
 
 }
