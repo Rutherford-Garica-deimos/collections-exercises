@@ -1,14 +1,25 @@
 package Grocerys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Items {
     protected String category;
+//    private HashMap<String, Integer> listItem;
     protected String name;
     protected int number;
+//
+//    public Items(String category, String name, int number) {
+//        this.category = category;
+//        this.name = name;
+//        this.number = number;
+//
+//    }
 
-    public Items(){
-        this.number = 0;
+    public Items( String name, int number) {
+        this.name = name;
+        this.number = number;
+
     }
 
     public void setCategory(String category) {
@@ -21,5 +32,17 @@ public class Items {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getName() {
+        return name;
     }
 }

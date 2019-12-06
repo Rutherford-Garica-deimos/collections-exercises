@@ -7,6 +7,10 @@ public class Input {
     // scanner should be set to a new instance of the Scanner class.
     private Scanner scanner = new Scanner(System.in);
 
+    public void inputCleaner(){
+        scanner.nextLine();
+    }
+
     public String getString() {
         return scanner.nextLine();
     }
@@ -42,7 +46,7 @@ public class Input {
     }
 
     public int getInt() {
-        System.out.println("Enter a number below.");
+//        System.out.println("Enter a number below.");
         return Integer.parseInt(getString());
         // alternative
 //        return scanner.nextInt();
@@ -50,7 +54,7 @@ public class Input {
 
     public int getInt(String prompt) {
         System.out.println(prompt);
-        return getInt(5, 10);
+        return getInt();
     }
 
     public double getDouble(double min, double max) {
