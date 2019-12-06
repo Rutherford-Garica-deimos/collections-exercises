@@ -16,22 +16,18 @@ public class Student {
         return this.name;
     }
 
-    ;
-
     // adds the given grade to the grades property
     public void addGrade(int grade) {
         grades.add(grade);
     }
 
-    public int[] getAllGrades(){
+    public int[] getAllGrades() {
         int[] newArray = new int[grades.size()];
-        for (int i= 0 ; i< newArray.length;i++){
+        for (int i = 0; i < newArray.length; i++) {
             newArray[i] = grades.get(i);
         }
         return newArray;
     }
-
-    ;
 
     // returns the average of the students grades
     public double getGradeAverage() {
