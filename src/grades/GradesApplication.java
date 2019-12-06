@@ -52,6 +52,7 @@ public class GradesApplication {
                 break;
             case 4:
                 runStudentAttendance();
+                break;
             case 5:
                 runStudentReport();
                 break;
@@ -111,6 +112,7 @@ public class GradesApplication {
 
     // ===== display student w/grades =====
     public static void runStudentSearch() { // displays student w/all grades
+        splash();
         String student = studentSearchInput();
         displayStudent(student);
         confirm();
@@ -118,9 +120,58 @@ public class GradesApplication {
 
     // ===== display student w/grades & average
     public static void runStudentSearchDetailed() { // displays student w/all grades & avg.
+        splash();
         String student = studentSearchInput();
         displayStudent(student);
         displayAverage(student);
+        confirm();
+    }
+
+    // ===== log student attendance =====
+    public static boolean recordAttendance(String date, String value, String studentName) {
+        switch (value.toLowerCase()) {
+            case "a":
+            case "absent":
+            case "p":
+            case "present":
+                students.get(studentName).setAttendance(date, value.toLowerCase());
+                return true;
+            default:
+                System.out.println("Attendance indicator not valid!");
+                return false;
+        }
+    }
+
+    public static void addStudentAttendance() {
+        String student = studentSearchInput();
+        System.out.println("Log student's attendance:");
+        String date = input.getString("Date: (YYYY/MM/DD)"); // check
+        String attendance = input.getString("Attendance: (P)-present/ (A)-absent");
+        while (!recordAttendance(date, attendance, student)) {
+            attendance = input.getString("Attendance: (P) = present/ (A) = absent");
+        }
+        System.out.printf("Logged: %s : %s - %s%n", date, attendance.toUpperCase(), students.get(student).getName());
+    }
+
+    public static void runStudentAddAttendance() {
+        splash();
+        addStudentAttendance();
+        confirm();
+    }
+
+    // ====== display student percentage ======
+    public static void displayStudentAttendance() {
+        String student = studentSearchInput();
+        if (students.get(student).getAttendance().isEmpty()) {
+            System.out.printf("No recorded attendances. Student - %s%n", students.get(student).getName());
+        } else {
+            System.out.printf("Attendance %%: %d - %s%n", students.get(student).getAttendancePercentage(), students.get(student).getName());
+        }
+    }
+
+    public static void runStudentAttendance() {
+        splash();
+        displayStudentAttendance();
         confirm();
     }
 
@@ -146,8 +197,6 @@ public class GradesApplication {
         for (int grade : classGrades) {
             sum += grade;
         }
-//        System.out.println(sum); // TODO: uncomment to display sum
-//        System.out.println(classGrades.size()); // TODO: uncomment to display size
         System.out.printf("Class Average: %.1f%n", (sum / classGrades.size()));
     }
 
@@ -167,55 +216,6 @@ public class GradesApplication {
     public static void runStudentReport() {
         System.out.printf("%nname,github_username,average%n");
         studentReport();
-        confirm();
-    }
-
-    // ====== display student percentage ======
-    public static void displayStudentAttendance() {
-        String student = studentSearchInput();
-        if (students.get(student).attendancePercentage() == 0) {
-            System.out.printf("Empty log list. Student - %s%n", students.get(student).getName());
-        } else {
-            System.out.printf("Attendance %%: %d - %s%n", students.get(student).attendancePercentage(), students.get(student).getName());
-        }
-    }
-
-    public static void runStudentAttendance() {
-        splash();
-        displayStudentAttendance();
-        confirm();
-    }
-
-    // ===== log student attendance =====
-    public static boolean recordAttendance(String date, String value, String studentName) {
-        switch (value.toLowerCase()) {
-            case "a":
-            case "absent":
-            case "p":
-            case "present":
-                students.get(studentName).addAttendanceLog(date, value.toLowerCase());
-                return true;
-            default:
-                System.out.println("Attendance indicator not valid!");
-                return false;
-        }
-    }
-
-    public static void addStudentAttendance() {
-        String student = studentSearchInput();
-        System.out.println("Log student's attendance:");
-        String date = input.getString("Date: (YYYY/MM/DD)"); // check
-        String attendance = input.getString("Attendance: (P)-present/ (A)-absent");
-        while (!recordAttendance(date, attendance, student)) {
-            attendance = input.getString("Attendance: (P) = present/ (A) = absent");
-        }
-        System.out.println(students.get(student).studentAttendanceRecord());
-        System.out.printf("Logged: %s : %s - %s%n", date, attendance.toUpperCase(), students.get(student).getName());
-    }
-
-    public static void runStudentAddAttendance() {
-        splash();
-        addStudentAttendance();
         confirm();
     }
 
@@ -248,33 +248,36 @@ public class GradesApplication {
         bob.addGrade(97);
         bob.addGrade(69);
 
-        bob.addAttendanceLog("2019/10/01", "a");
-        bob.addAttendanceLog("2019/10/02", "a");
-        bob.addAttendanceLog("2019/10/03", "a");
+        bob.setAttendance("2019/10/01", "a");
+        bob.setAttendance("2019/10/02", "a");
+        bob.setAttendance("2019/10/03", "a");
+        bob.setAttendance("2019/10/04", "a");
 
         jack.addGrade(99);
         jack.addGrade(96);
         jack.addGrade(89);
 
-        bob.addAttendanceLog("2019/10/04", "p");
-        bob.addAttendanceLog("2019/10/05", "p");
-        bob.addAttendanceLog("2019/10/06", "p");
+        jack.setAttendance("2019/10/05", "p");
+        jack.setAttendance("2019/10/06", "p");
+        jack.setAttendance("2019/10/07", "a");
 
         phil.addGrade(79);
         phil.addGrade(83);
         phil.addGrade(78);
 
-        bob.addAttendanceLog("2019/10/07", "a");
-        bob.addAttendanceLog("2019/10/08", "p");
-        bob.addAttendanceLog("2019/10/09", "a");
+        bob.setAttendance("2019/10/01", "p");
+        bob.setAttendance("2019/10/02", "p");
+        bob.setAttendance("2019/10/03", "p");
+        bob.setAttendance("2019/10/04", "p");
 
         bill.addGrade(100);
         bill.addGrade(89);
         bill.addGrade(94);
 
-        bob.addAttendanceLog("2019/10/10", "p");
-        bob.addAttendanceLog("2019/10/11", "a");
-        bob.addAttendanceLog("2019/10/12", "a");
+        bob.setAttendance("2019/10/01", "p");
+        bob.setAttendance("2019/10/02", "p");
+        bob.setAttendance("2019/10/03", "p");
+        bob.setAttendance("2019/10/04", "a");
 
         students.put("bigBob", bob); // add to HashMap with ('user name','Student')
         students.put("bigJack", jack);
