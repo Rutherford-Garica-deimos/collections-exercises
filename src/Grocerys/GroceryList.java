@@ -3,6 +3,8 @@ package Grocerys;
 import util.Input;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class GroceryList {
@@ -22,7 +24,6 @@ public class GroceryList {
     public static void main(String[] args) {
         groceryListApp();
 
-
     }
 
     public static void groceryListApp() {
@@ -35,6 +36,13 @@ public class GroceryList {
                 System.out.println("Error: there is no list...");
                 groceryListApp();
             } else {
+//                Collections.sort(list.entrySet());
+                for (HashMap.Entry<String,Categories> category : list.entrySet()){
+                    category.getValue().sortList();
+                    System.out.println("--------------------------------------------------------");
+                    System.out.printf("Category: %s%n%n",category.getKey());
+                    category.getValue().printItems();
+                }
 //                for (HashMap.Entry<Integer, Items> entry : list.entrySet()) {
 //                    System.out.printf("Item - %s -- category: %s%n Item: %s%n Number: %s%n%n", entry.getKey(),
 //                            entry.getValue().getCategory(),
@@ -60,25 +68,20 @@ public class GroceryList {
             int chooseCat = input.getInt(0, (categories.length + 1));
             if (chooseCat != (categories.length + 1)) {
                 String cat = categories[chooseCat];
-
+                input.inputCleaner();
                 String itemName = input.getString("Enter the items name:");
-
+//                input.inputCleaner();
                 int numberBuy = input.getInt("Enter the number you wish to buy:");
 //                Items newItem = new Items(cat, itemName, numberBuy);
 //                list.put(listSize, newItem);
-
+                input.inputCleaner();
                 Items newItem = new Items(itemName, numberBuy);
                 if (!list.containsKey(cat)){
-
-//                    list.put(cat,new Categories())
-                }else{
-
+                    list.put(cat,new Categories());
                 }
+                list.get(cat).addItem(newItem);
 
-
-
-
-                listSize++;
+//                listSize++;
                 createList();
             } else {
                 System.out.println("finalizing list...");

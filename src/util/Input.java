@@ -47,7 +47,7 @@ public class Input {
 
     public int getInt() {
 //        System.out.println("Enter a number below.");
-        return Integer.parseInt(getString());
+        return scanner.nextInt();
         // alternative
 //        return scanner.nextInt();
     }
